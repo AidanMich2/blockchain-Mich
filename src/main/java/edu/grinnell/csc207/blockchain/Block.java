@@ -42,13 +42,30 @@ public class Block {
         return prevHash;
     }
 
+    public void setPrevHash (Hash prevHash){
+        this.prevHash = prevHash;
+    }
+
     public Hash getHash () throws NoSuchAlgorithmException{ //should hash be a variable in the constructor, cause currently it is not saved anywhere
         MessageDigest md = MessageDigest.getInstance("sha-256");
-        byte [] hash = null;
-        md.update (ByteBuffer.allocate(4).putInt(num));// for first block
-        md.update (ByteBuffer.allocate(4).putInt(amount)); //for the amount or data in the block dont know how much to allocate
+        byte [] hash = {1,1,1};
+        md.reset ();
+        md.update (ByteBuffer.allocate(4).putInt(num).array ());// for first block
+        md.update (ByteBuffer.allocate(4).putInt(amount).array ()); //for the amount or data in the block dont know how much to allocate
         md.update (getPrevHash ().getData());//previous blocks hash
-        md.update (ByteBuffer.allocate(4).putLong(nonce));
+        md.update (ByteBuffer.allocate(8).putLong(nonce).array ());
+        hash = md.digest();
+        Hash h = new Hash(hash);
+        return h;
+    }
+
+    public Hash getHashNoPrev () throws NoSuchAlgorithmException{ //should hash be a variable in the constructor, cause currently it is not saved anywhere
+        MessageDigest md = MessageDigest.getInstance("sha-256");
+        byte [] hash = {1,1,1};
+        md.reset ();
+        md.update (ByteBuffer.allocate(4).putInt(0).array ());// for first block
+        md.update (ByteBuffer.allocate(4).putInt(amount).array ()); //for the amount or data in the block dont know how much to allocate
+        md.update (ByteBuffer.allocate(8).putLong(nonce).array ());
         hash = md.digest();
         Hash h = new Hash(hash);
         return h;

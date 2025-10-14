@@ -28,9 +28,9 @@ public class BlockChain {
     public int amount;
 
     public BlockChain (int amount) throws NoSuchAlgorithmException{//not sure what is necesary inside this constuctor
-        first = new Node (mine (amount), null);
-        last = first;
-        size++;
+        this.first = new Node (mine (amount), null);
+        this.last = first;
+        // this.size++;
         this.amount = amount;
     }
 
@@ -40,7 +40,7 @@ public class BlockChain {
         if (size == 0){
             byte [] bitArr = {1,1,1};
             Hash h = new Hash (bitArr);
-            while (h.toString ().charAt (0) != 0 || h.toString ().charAt (1) != 0 || h.toString ().charAt (2) != 0){
+            while (bitArr [0] != 0 || bitArr [1] != 0 || bitArr [2] != 0){
                 md.reset ();
                 md.update (ByteBuffer.allocate(4).putInt(0).array ());// for first block
                 md.update (ByteBuffer.allocate(4).putInt(amount).array ()); //for the amount or data in the block dont know how much to allocate
@@ -48,23 +48,30 @@ public class BlockChain {
                 bitArr = md.digest();
                 nonce++;
                 h = new Hash (bitArr);
-                System.out.println(h);
+                // System.out.println(h);
                 
             }
+            nonce--;
             Block nBlock = new Block (0, amount, null, nonce);
+            nBlock.setPrevHash (h);
             return nBlock;
         }
         else{
-            byte [] hash = {1,1,1};
-            while (hash [0] != 0 || hash [1] != 0 || hash [2] != 0){
-                md.update (ByteBuffer.allocate(4).putInt(getSize ()));// for first block
-                md.update (ByteBuffer.allocate(4).putInt(amount)); //for the amount or data in the block dont know how much to allocate
+            byte [] bitArr = {1,1,1};
+            Hash h = new Hash (bitArr);
+            while (bitArr [0] != 0 || bitArr [1] != 0 || bitArr [2] != 0){
+                md.reset ();
+                md.update (ByteBuffer.allocate(4).putInt(getSize ()).array ());// for first block
+                md.update (ByteBuffer.allocate(4).putInt(amount).array ()); //for the amount or data in the block dont know how much to allocate
                 md.update (last.b.getPrevHash ().getData());//previous blocks hash
-                md.update (ByteBuffer.allocate(4).putLong(nonce));
-                hash = md.digest();
+                md.update (ByteBuffer.allocate(8).putLong(nonce).array ());
+                bitArr = md.digest();
                 nonce++;
+                h = new Hash (bitArr);
             }
+            nonce--;
             Block nBlock = new Block (getSize (), amount, last.b.getPrevHash (), nonce);
+            nBlock.setPrevHash (h);
             return nBlock;
         }
     }
@@ -138,15 +145,25 @@ public class BlockChain {
     }
 
     public String toString(){
-        Node temp = first;
+        Node temp = this.first;
         String str = "";
-        while (temp.next != null){
+        if (temp.next == null){
             try {
-                str += ("Block " + getSize () + "(Amount: " + temp.b.getAmount () + ", Nonce: " + temp.b.getNonce () + ", prevHash:" + temp.b.getPrevHash () + ", hash: " + temp.b.getHash () + "\n");
+                str += ("Block " + getSize () + " (Amount: " + temp.b.getAmount () + ", Nonce: " + temp.b.getNonce () + ", prevHash: " + null + ", hash: " + temp.b.getHashNoPrev () + ")\n");
             } catch (NoSuchAlgorithmException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+            return str;
+        }
+        while (temp.next != null){
+            try {
+                str += ("Block " + getSize () + " (Amount: " + temp.b.getAmount () + ", Nonce: " + temp.b.getNonce () + ", prevHash:" + temp.b.getPrevHash () + ", hash: " + temp.b.getHash () + ")\n");
+            } catch (NoSuchAlgorithmException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            temp = temp.next;
         }
         return str;
     }

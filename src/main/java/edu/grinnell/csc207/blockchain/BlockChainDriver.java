@@ -16,22 +16,29 @@ public class BlockChainDriver {
         Scanner scan = new Scanner(System.in);
         // System.out.print("Command?");   
         int n = scan.nextInt ();
-        System.out.println(n);
         BlockChain bc = new BlockChain ((n));
         boolean running = true;
-        System.out.print("HA");
+        // Block b = new Block (0,0, null, 0);
         while (running){
-            System.out.print("LOL");
-            bc.toString ();
-            System.out.print("Command?");
+            System.out.println (bc.toString ());
+            System.out.print("Command? ");
             if (scan.next ().equals ("mine")){
-                System.out.println("mine");
-                System.out.print ("Amount transferred?");
+                // System.out.println("mine");
+                System.out.print ("Amount transferred? ");
                 int num = 0;
                 String str = scan.next ();
                 num = Integer.parseInt (str);
-                System.out.println(num);
+                bc.mine (num);
+                // System.out.println(num);
                 System.out.println("amount = " + num + ", nonce = " + bc.last.b.getNonce ());
+            }
+            if (scan.next ().equals ("append")){
+                System.out.print ("Amount transferred? ");
+                int num = 0;
+                String str = scan.next ();
+                num = Integer.parseInt (str);
+                bc.append (bc.mine (num));
+                 System.out.println("Nonce? ");
             }
         }
     }  
