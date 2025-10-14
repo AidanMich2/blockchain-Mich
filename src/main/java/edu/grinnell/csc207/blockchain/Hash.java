@@ -9,11 +9,10 @@ public class Hash {
     // TODO: fill me in!
 
     private byte [] data;
-    private Hash h;
 
     public Hash (byte [] data){
 
-        this.h = new Hash (data);
+        this.data = data;
 
     }
 
@@ -31,7 +30,7 @@ public class Hash {
     public boolean equals(Object other){
         if (other instanceof Hash){
             Hash o = (Hash) other;
-            if (Arrays.equals (h.data, o.data)){
+            if (Arrays.equals (data, o.data)){
                 return true;
             }
         }
@@ -39,7 +38,7 @@ public class Hash {
     }
 
     public String toString (){
-        String str = null;
+        String str = "";
         int bit;
         for (int i = 0; i < data.length; i++){
             bit = Byte.toUnsignedInt(data [i]);
