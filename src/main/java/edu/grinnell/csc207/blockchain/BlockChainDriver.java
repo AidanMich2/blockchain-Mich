@@ -15,14 +15,16 @@ public class BlockChainDriver {
     public static void main(String[] args) throws NumberFormatException, NoSuchAlgorithmException {
         Scanner scan = new Scanner(System.in);
         // System.out.print("Command?");   
-        int n = scan.nextInt ();
-        BlockChain bc = new BlockChain ((n));
+        // int n = scan.nextInt ();
+        String firstinput = scan.next();
+        BlockChain bc = new BlockChain (Integer.parseInt(firstinput));
         boolean running = true;
         // Block b = new Block (0,0, null, 0);
         while (running){
             System.out.println (bc.toString ());
             System.out.print("Command? ");
-            if (scan.next ().equals ("mine")){
+            String input = scan.next();
+            if (input.equals ("mine")){
                 // System.out.println("mine");
                 System.out.print ("Amount transferred? ");
                 int num = 0;
@@ -32,7 +34,7 @@ public class BlockChainDriver {
                 // System.out.println(num);
                 System.out.println("amount = " + num + ", nonce = " + bc.last.b.getNonce ());
             }
-            if (scan.next ().equals ("append")){
+            if (input.equals ("append")){
                 System.out.print ("Amount transferred? ");
                 int num = 0;
                 String str = scan.next ();
@@ -40,22 +42,22 @@ public class BlockChainDriver {
                 bc.append (bc.mine (num));
                  System.out.println("Nonce? ");
             }
-            if (scan.next ().equals ("remove")){
-                if(bc.removeLast()){
+            if (input.equals ("remove")){
+                if(bc.removeLast() == false){
                     return;
                 }
             }
-            if (scan.next ().equals ("check")){
+            if (input.equals ("check")){
                 if(bc.isValidBlockChain()){
                     System.out.println ("Chain is valid!");
                 } else{
                     System.out.println ("Chain is invalid!");
                 }
             }
-            if (scan.next ().equals ("report")){
+            if (input.equals ("report")){
                 bc.printBalances();
             }
-            if (scan.next ().equals ("help")){
+            if (input.equals ("help")){
                 System.out.println ("Valid commands:");
                 System.out.println ("   mine: discovers the nonce for a given transaction");
                 System.out.println ("   append: appends a new block onto the end of the chain");
@@ -65,7 +67,7 @@ public class BlockChainDriver {
                 System.out.println ("   help: prints this list of commands");
                 System.out.println ("   quit: quits the program");
             }
-            if (scan.next ().equals ("quit")){
+            if (input.equals ("quit")){
                 running = false;
             }
         }
