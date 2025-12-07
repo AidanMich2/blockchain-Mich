@@ -9,6 +9,10 @@ import java.security.NoSuchAlgorithmException;
  * monetary transactions.
  */
 public class BlockChain {
+    
+    /**
+     * A node that holds blocks.
+     */
     public static class Node {
         public Block b;
         public Node next;
@@ -83,8 +87,8 @@ public class BlockChain {
             System.out.println("Non zero case: " + h);
             nonce--;
             Block nBlock = new Block(getSize(), amount, null, nonce);
-                nBlock = new Block(getSize(), amount, last.b.getHash(), nonce);
-                nBlock.setPrevHash(last.b.getHash());
+            nBlock = new Block(getSize(), amount, last.b.getHash(), nonce);
+            nBlock.setPrevHash(last.b.getHash());
             return nBlock;
         }
     }
@@ -98,9 +102,9 @@ public class BlockChain {
         Node temp = first;
         int sum = 0;
         while (temp.next != null) {
-            if (temp.b.getHash().getData()[0] != 0 || 
-                temp.b.getHash().getData()[1] != 0 || 
-                temp.b.getHash().getData()[2] != 0) {
+            if (temp.b.getHash().getData()[0] != 0 
+                || temp.b.getHash().getData()[1] != 0 
+                || temp.b.getHash().getData()[2] != 0) {
                 return false;
             }
             sum += temp.b.getAmount();
@@ -117,21 +121,21 @@ public class BlockChain {
      * @throws NoSuchAlgorithmException if there is an issue in mining. 
      */
     public void printBalances() throws NoSuchAlgorithmException {
-        int Bob = 0;
-        int Anna = 300;
+        int bob = 0;
+        int anna = 300;
         if (isValidBlockChain()) {
             Node temp = first;
             while (temp.next != null) {
                 if (temp.b.getAmount() < 0) {
-                    Anna -= temp.b.getAmount();
-                    Bob += temp.b.getAmount();
+                    anna -= temp.b.getAmount();
+                    bob += temp.b.getAmount();
                 } else {
-                    Bob -= temp.b.getAmount();
-                    Anna += temp.b.getAmount();
+                    bob -= temp.b.getAmount();
+                    anna += temp.b.getAmount();
                 }
             }
         }
-        System.out.println("Anna: " + Anna + ",  Bob: " + Bob);
+        System.out.println("Anna: " + anna + ",  Bob: " + bob);
     }
 
     /**
@@ -139,9 +143,9 @@ public class BlockChain {
      * @param blk is the block being added.
      */
     public void append(Block blk) {
-        Node Temp = new Node(blk, null);
-        last.next = Temp;
-        last = Temp;
+        Node temp = new Node(blk, null);
+        last.next = temp;
+        last = temp;
         size++;
     }
 
@@ -194,7 +198,9 @@ public class BlockChain {
         int link = 0;
         if (temp.next == null) {
             try {
-                str += ("Block " + 0 + " (Amount: " + temp.b.getAmount() + ", Nonce: " + temp.b.getNonce() + ", prevHash: " + null + ", hash: " + temp.b.getHashNoPrev() + ")\n");
+                str += ("Block " + 0 + " (Amount: " + temp.b.getAmount() + ", Nonce: " 
+                + temp.b.getNonce() + ", prevHash: " + null + ", hash: " + temp.b.getHashNoPrev() 
+                + ")\n");
             } catch(NoSuchAlgorithmException e) {
                 e.printStackTrace();
             }
@@ -203,7 +209,9 @@ public class BlockChain {
             while (link < getSize()) {
                 if (link == 0) {
                     try {
-                        str += ("Block " + 0 + " (Amount: " + temp.b.getAmount() + ", Nonce: " + temp.b.getNonce() + ", prevHash: " + null + ", hash: " + temp.b.getHashNoPrev() + ")\n");
+                        str += ("Block " + 0 + " (Amount: " + temp.b.getAmount() + ", Nonce: " 
+                        + temp.b.getNonce() + ", prevHash: " + null + ", hash: " 
+                        + temp.b.getHashNoPrev() + ")\n");
                     } catch (NoSuchAlgorithmException e) {
                         e.printStackTrace();
                     }
@@ -211,7 +219,9 @@ public class BlockChain {
                     temp = temp.next;
                 } else {
                     try {
-                        str += ("Block " + link + " (Amount: " + temp.b.getAmount() + ", Nonce: " + temp.b.getNonce() + ", prevHash: " + temp.b.getPrevHash() + ", hash: " + temp.b.getHash() + ")\n");
+                        str += ("Block " + link + " (Amount: " + temp.b.getAmount() 
+                        + ", Nonce: " + temp.b.getNonce() + ", prevHash: " 
+                        + temp.b.getPrevHash() + ", hash: " + temp.b.getHash() + ")\n");
                     } catch (NoSuchAlgorithmException e) {
                         e.printStackTrace();
                     }

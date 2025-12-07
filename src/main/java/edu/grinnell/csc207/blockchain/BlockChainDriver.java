@@ -34,9 +34,9 @@ public class BlockChainDriver {
                 String str = scan.next();
                 num = Integer.parseInt(str);
                 bc.append(bc.mine(num));
-                 System.out.println("Nonce? ");
+                System.out.println("Nonce? ");
             } else if (input.equals("remove")) {
-                if(bc.removeLast() == false) {
+                if (bc.removeLast() == false) {
                     return;
                 }
             } else if (input.equals("check")) {

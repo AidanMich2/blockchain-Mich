@@ -13,7 +13,7 @@ public class Hash {
      * Constructs a new hash based on the given data.
      * @param data is stored via this hash object.
      */
-    public Hash (byte[] data) {
+    public Hash(byte[] data) {
         this.data = data;
     }
 
@@ -35,11 +35,11 @@ public class Hash {
 
     /**
      * Checks if one hash equals another.
-     * @return a boolean representing the two hashes equality.
      * @param other is the other has being compared
+     * @return a boolean representing the two hashes equality.
      */
     public boolean equals(Object other) {
-        if (other instanceof Hash){
+        if (other instanceof Hash) {
             Hash o = (Hash) other;
             if (Arrays.equals(data, o.data)) {
                 return true;
@@ -64,7 +64,7 @@ public class Hash {
                 int temp;
                 str += bit / 16;
                 temp = bit % 16;
-                if (temp < 10){
+                if (temp < 10) {
                     str += temp;
                 } else if (temp == 10) {
                     str += "A";
