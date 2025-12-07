@@ -199,8 +199,8 @@ public class BlockChain {
         if (temp.next == null) {
             try {
                 str += ("Block " + 0 + " (Amount: " + temp.b.getAmount() + ", Nonce: " 
-                    + temp.b.getNonce() + ", prevHash: " + null + ", hash: " + temp.b.getHashNoPrev() 
-                    + ")\n");
+                    + temp.b.getNonce() + ", prevHash: " + null + ", hash: " 
+                    + temp.b.getHashNoPrev() + ")\n");
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
             }
