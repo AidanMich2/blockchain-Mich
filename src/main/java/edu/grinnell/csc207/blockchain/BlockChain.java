@@ -199,9 +199,9 @@ public class BlockChain {
         if (temp.next == null) {
             try {
                 str += ("Block " + 0 + " (Amount: " + temp.b.getAmount() + ", Nonce: " 
-                + temp.b.getNonce() + ", prevHash: " + null + ", hash: " + temp.b.getHashNoPrev() 
-                + ")\n");
-            } catch(NoSuchAlgorithmException e) {
+                    + temp.b.getNonce() + ", prevHash: " + null + ", hash: " + temp.b.getHashNoPrev() 
+                    + ")\n");
+            } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
             }
             return str;
@@ -210,8 +210,8 @@ public class BlockChain {
                 if (link == 0) {
                     try {
                         str += ("Block " + 0 + " (Amount: " + temp.b.getAmount() + ", Nonce: " 
-                        + temp.b.getNonce() + ", prevHash: " + null + ", hash: " 
-                        + temp.b.getHashNoPrev() + ")\n");
+                            + temp.b.getNonce() + ", prevHash: " + null + ", hash: " 
+                            + temp.b.getHashNoPrev() + ")\n");
                     } catch (NoSuchAlgorithmException e) {
                         e.printStackTrace();
                     }
@@ -220,8 +220,8 @@ public class BlockChain {
                 } else {
                     try {
                         str += ("Block " + link + " (Amount: " + temp.b.getAmount() 
-                        + ", Nonce: " + temp.b.getNonce() + ", prevHash: " 
-                        + temp.b.getPrevHash() + ", hash: " + temp.b.getHash() + ")\n");
+                            + ", Nonce: " + temp.b.getNonce() + ", prevHash: " 
+                            + temp.b.getPrevHash() + ", hash: " + temp.b.getHash() + ")\n");
                     } catch (NoSuchAlgorithmException e) {
                         e.printStackTrace();
                     }
