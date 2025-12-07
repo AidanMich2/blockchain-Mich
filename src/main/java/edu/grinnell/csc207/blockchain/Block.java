@@ -84,13 +84,13 @@ public class Block {
      * @return the hash of this block.
      * @throws NoSuchAlgorithmException if there is an error in this calculation process.
      */
-    public Hash getHash() throws NoSuchAlgorithmException { //should hash be a variable in the constructor, cause currently it is not saved anywhere
+    public Hash getHash() throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("sha-256");
-        byte [] hash = {1,1,1};
+        byte[] hash = {1, 1, 1};
         md.reset();
-        md.update(ByteBuffer.allocate(4).putInt(num).array());// for first block
-        md.update(ByteBuffer.allocate(4).putInt(amount).array()); //for the amount or data in the block dont know how much to allocate
-        md.update(getPrevHash().getData());//previous blocks hash
+        md.update(ByteBuffer.allocate(4).putInt(num).array());
+        md.update(ByteBuffer.allocate(4).putInt(amount).array());
+        md.update(getPrevHash().getData());
         md.update(ByteBuffer.allocate(8).putLong(nonce).array());
         hash = md.digest();
         Hash h = new Hash(hash);
@@ -102,12 +102,12 @@ public class Block {
      * @return the hash of this block.
      * @throws NoSuchAlgorithmException if there is an error in the calculation process.
      */
-    public Hash getHashNoPrev() throws NoSuchAlgorithmException { //should hash be a variable in the constructor, cause currently it is not saved anywhere
+    public Hash getHashNoPrev() throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("sha-256");
-        byte [] hash = {1,1,1};
+        byte[] hash = {1, 1, 1};
         md.reset();
-        md.update(ByteBuffer.allocate(4).putInt(0).array());// for first block
-        md.update(ByteBuffer.allocate(4).putInt(amount).array()); //for the amount or data in the block dont know how much to allocate
+        md.update(ByteBuffer.allocate(4).putInt(0).array());
+        md.update(ByteBuffer.allocate(4).putInt(amount).array());
         md.update(ByteBuffer.allocate(8).putLong(nonce).array());
         hash = md.digest();
         Hash h = new Hash(hash);

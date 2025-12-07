@@ -13,7 +13,7 @@ public class Hash {
      * Constructs a new hash based on the given data.
      * @param data is stored via this hash object.
      */
-    public Hash (byte [] data) {
+    public Hash (byte[] data) {
         this.data = data;
     }
 
@@ -29,15 +29,16 @@ public class Hash {
      * Checks to see if the hash is valid based on our hashing constraints.
      * @return a boolean representing the hashes' validity.
      */
-    public boolean isValid (){
+    public boolean isValid() {
         return data[0] == 0 && data[1] == 0 && data[2] == 0;
     }
 
     /**
      * Checks if one hash equals another.
      * @return a boolean representing the two hashes equality.
+     * @param other is the other has being compared
      */
-    public boolean equals(Object other){
+    public boolean equals(Object other) {
         if (other instanceof Hash){
             Hash o = (Hash) other;
             if (Arrays.equals(data, o.data)) {

@@ -13,6 +13,11 @@ public class BlockChain {
         public Block b;
         public Node next;
 
+        /**
+         * Constructs a node of a block and the next node.
+         * @param b is a block.
+         * @param next is another node.
+         */
         public Node(Block b, Node next) {
             this.b = b;
             this.next = next;
@@ -46,13 +51,13 @@ public class BlockChain {
         MessageDigest md = MessageDigest.getInstance("sha-256");
         long nonce = 0;
         if (size == 0) {
-            byte [] bitArr = {1,1,1};
+            byte[] bitArr = {1, 1, 1};
             Hash h = new Hash(bitArr);
-            while (bitArr [0] != 0 || bitArr [1] != 0 || bitArr [2] != 0) {
+            while (bitArr[0] != 0 || bitArr[1] != 0 || bitArr[2] != 0) {
                 md.reset();
-                md.update(ByteBuffer.allocate(4).putInt(0).array());// for first block
-                md.update(ByteBuffer.allocate(4).putInt(amount).array()); //for the amount or data in the block dont know how much to allocate
-                md.update(ByteBuffer.allocate(8).putLong(nonce).array());//for the nonce
+                md.update(ByteBuffer.allocate(4).putInt(0).array());
+                md.update(ByteBuffer.allocate(4).putInt(amount).array());
+                md.update(ByteBuffer.allocate(8).putLong(nonce).array());
                 bitArr = md.digest();
                 nonce++;
                 h = new Hash(bitArr);
@@ -63,13 +68,13 @@ public class BlockChain {
             nBlock.setPrevHash(h);
             return nBlock;
         } else {
-            byte [] bitArr = {1,1,1};
+            byte[] bitArr = {1, 1, 1};
             Hash h = new Hash(bitArr);
-            while (bitArr [0] != 0 || bitArr [1] != 0 || bitArr [2] != 0) {
+            while (bitArr[0] != 0 || bitArr[1] != 0 || bitArr[2] != 0) {
                 md.reset();
-                md.update(ByteBuffer.allocate(4).putInt(getSize()).array());// for first block
-                md.update(ByteBuffer.allocate(4).putInt(amount).array()); //for the amount or data in the block dont know how much to allocate
-                md.update(last.b.getHash().getData());//previous blocks hash
+                md.update(ByteBuffer.allocate(4).putInt(getSize()).array());
+                md.update(ByteBuffer.allocate(4).putInt(amount).array()); 
+                md.update(last.b.getHash().getData());
                 md.update(ByteBuffer.allocate(8).putLong(nonce).array());
                 bitArr = md.digest();
                 nonce++;
@@ -93,7 +98,9 @@ public class BlockChain {
         Node temp = first;
         int sum = 0;
         while (temp.next != null) {
-            if (temp.b.getHash().getData() [0]!= 0 || temp.b.getHash().getData() [1]!= 0 || temp.b.getHash().getData() [2]!= 0) {
+            if (temp.b.getHash().getData()[0] != 0 || 
+                temp.b.getHash().getData()[1] != 0 || 
+                temp.b.getHash().getData()[2] != 0) {
                 return false;
             }
             sum += temp.b.getAmount();
@@ -206,7 +213,6 @@ public class BlockChain {
                     try {
                         str += ("Block " + link + " (Amount: " + temp.b.getAmount() + ", Nonce: " + temp.b.getNonce() + ", prevHash: " + temp.b.getPrevHash() + ", hash: " + temp.b.getHash() + ")\n");
                     } catch (NoSuchAlgorithmException e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
                     temp = temp.next;
